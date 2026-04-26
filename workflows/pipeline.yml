@@ -1,0 +1,39 @@
+# ":" after name
+name: ML Docker Pipeline
+# identation
+on:
+ push:
+   branches:
+      main
+# identation
+jobs:
+  build:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Checkout repository
+  uses: actions/checkout@v4
+
+  #remove " . "
+  - name: Build docker image
+  run: docker build ml-project
+  
+  run-pipeline:
+  needs: build
+  runs-on: ubuntu-latest
+  steps:
+  - name: Run container
+  run: docker run ml-project
+
+  # - name: fetch_data.py
+  # run: 
+
+  - name: train model
+  run: train model
+  uses: train.py
+  
+  - name: Upload model
+  run: python upload_model.py
+  uses: actions/uploading/artivacts@v4
+  with:
+    name: upload_model.py
+    path: upload_model.py
